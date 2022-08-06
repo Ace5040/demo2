@@ -1,0 +1,12 @@
+.CUSTOM-DIR-EPCSShipTabs {
+   .form-input {
+       width: 50%!important;
+   }
+   .epcs-form-input-group_left  {
+       justify-content: space-between;
+       .epcs-form-input__title_left {
+           white-space: pre-wrap;
+           width: 50%;
+       }
+   }
+}

@@ -1,0 +1,44 @@
+.CUSTOM {
+  &-EPCS {
+    &FormInput,&Direction,&Accordion {
+      padding: 0 20px;
+      margin-bottom: 15px;
+      .epcs-form-input-group_left {
+        .epcs-form-input__title_left {
+          white-space: nowrap;
+        }
+        .form-input {
+          width: 100%;
+          
+        }
+      }
+    }
+
+    &Accordion {
+      .epcs-components {
+        .accordion-row {
+          margin:10px 0;
+
+        }
+        .direction-row {
+          .col {
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+.CUSTOM-DIR-EPCSplaceNsrLat,.CUSTOM-DIR-EPCSplaceNsrLon,.CUSTOM-DIR-EPCSexitLat,.CUSTOM-DIR-EPCSexitLon,.CUSTOM-DIR-EPCSplaceNsrLa1t,.CUSTOM-DIR-EPCSplaceNsrLo1n,.CUSTOM-DIR-EPCSCUSTOMdepartureLat,.CUSTOM-DIR-EPCSCUSTOMdepartureLon{
+  align-self: flex-end;
+}
+.CUSTOM-DIR-EPCSDirectionCoordinates,
+.CUSTOM-DIR-EPCSDestination ,
+.CUSTOM-DIR-EPCSEnter,
+.CUSTOM-DIR-EPCSDirectionEnterDisp,
+.CUSTOM-DIR-EPCSDirectionEnterDisp1 {
+  .direction-row {
+    align-items: flex-end;
+  }
+
+}

@@ -1,0 +1,79 @@
+.CUSTOM-DIR-activateRouteMapButton,
+.CUSTOM-DIR-clearRouteButton {
+  width: 35px;
+}
+
+.CUSTOM-DIR-routeLabel {
+  width: calc(100% - 80px);
+}
+
+.CUSTOM-DIR-routeLeftSide {
+  width: 590px;
+}
+
+.CUSTOM-DIR-routeMap {
+  width: calc(100% - 620px);
+}
+
+.CUSTOM-DIR-route {
+  .CUSTOM-DIR-coordiateRow {
+    width: calc(100% - 80px);
+  }
+
+  .CUSTOM-DIR-coordiateButtonsRow {
+    width: 72px;
+  }
+
+  .CUSTOM-DIR-lat,
+  .CUSTOM-DIR-lon {
+    min-width: 176px;
+    max-width: 176px;
+  }
+
+  .CUSTOM-DIR-latDirection,
+  .CUSTOM-DIR-lonDirection {
+    min-width: 60px;
+    max-width: 60px;
+  }
+
+  .CUSTOM-DIR-addButton,
+  .CUSTOM-DIR-deleteButton {
+    text-align: center;
+    width: 32px !important;
+  }
+}
+
+@media (max-width: 1270px) {
+  .CUSTOM-DIR-routeLeftSide {
+    width: 380px;
+  }
+
+  .CUSTOM-DIR-route {
+    width: 326px;
+  }
+
+  .CUSTOM-DIR-routeMap {
+    width: calc(100% - 410px);
+  }
+
+  .CUSTOM-DIR-route {
+    .CUSTOM-DIR-coordiateButtonsRow {
+      align-self: end;
+    }
+
+    .CUSTOM-DIR-coordiateRowLat,
+    .CUSTOM-DIR-coordiateRowLon {
+      width: 100%;
+      margin-bottom: 0;
+
+      .epcs-form-input__title_left {
+        min-width: 75px;
+      }
+    }
+  }
+}
+
+
+.CUSTOM-DIR-topRow.direction-column {
+  align-self: flex-start!important;
+}

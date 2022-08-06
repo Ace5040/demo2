@@ -1,0 +1,67 @@
+.direction-column {
+  margin-bottom: 10px;
+  width: 100%;
+  position: relative;
+  // align-self: end;
+}
+.direction-row  {
+  flex-wrap: wrap;
+
+}
+.CUSTOM-EPCSDirection {
+  margin-top: 20px;
+}
+.CUSTOM-DIR-EPCSDirectionSubMain,.CUSTOM-DIR-routeLeftSide  {
+  align-self: flex-start;
+}
+
+.CUSTOM-DIR-EPCSDirectionSubMain {
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.direction-row  {
+  align-items: flex-end;
+}
+
+.form-input {
+  .dx-selectbox-container {
+    max-height: 30px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #d6d6d6;
+  border-radius: 8px;
+  border-style: solid;
+  border-color: #fff;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #d6d6d6;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #9a9a9a;
+  border-radius: 8px;
+  border: 1px solid #b8b8b8;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #757575;
+}
+::-webkit-scrollbar-corner {
+  background-color: #fff;
+}
+::-webkit-resizer {
+  background-color: #666;
+}
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  height: 15px;
+}
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  height: 15px;
+}
+
