@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="epcs-dispatching">
+  <div id="app-epcs-dispatching" class="epcs-dispatching">
     <FormTemplate
       :formVue="formsForTpl"
       :form="formByName"
@@ -61,7 +61,7 @@ export default {
     // this.getComponent({ nameForm: "ShipsForm" });
     // this.getComponent({ nameForm: "PhotoDisp" });
     // this.getComponent({ nameForm: "ShipsDetailForm" });
-    
+
     //Шина событий для DISPS
     this.$bus.$on("goToMainPage", () => this.getComponent({ nameForm: "MainForm" }));
     //Шина событий для SHIPS

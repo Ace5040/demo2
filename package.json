@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "buildR": "rollup -c",
     "serve:standalone": "vue-cli-service serve --mode standalone"
   },
   "dependencies": {
@@ -36,7 +37,16 @@
     "sass": "^1.49.9",
     "sass-loader": "^10.1.1",
     "vue-cli-plugin-single-spa": "~3.2.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.4",
+    "rollup": "^2.77.0",
+    "rollup-plugin-polyfill-node": "^0.10.1",
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-svg": "^2.0.0",
+    "rollup-plugin-vue2": "^0.8.1"
   },
   "eslintConfig": {
     "root": true,
