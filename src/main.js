@@ -54,7 +54,12 @@ export class Disp {
   constructor(element, options) {
     // Vue.prototype.store.dispatch('dispStore/setGmiloUrl', options.gmilourl);
     new Vue({
-      render: h => h(App),
+      render: h => h(App,{
+        props: {
+          eventBus: new Vue(),
+          store: localStore
+        }
+      }),
     }).$mount(element);
   }
 }
