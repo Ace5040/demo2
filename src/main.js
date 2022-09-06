@@ -53,9 +53,10 @@ const vueLifecycles = singleSpaVue({
 export const bootstrap = vueLifecycles.bootstrap;
 export const mount = vueLifecycles.mount;
 export const unmount = vueLifecycles.unmount;
-export class Disp {
+export class initDisps {
   constructor(element, options) {
     // Vue.prototype.store.dispatch('dispStore/setGmiloUrl', options.gmilourl);
+    Vue.prototype.$redux = options.reduxStore
     new Vue({
       render: h => h(App,{
         props: {

@@ -9,8 +9,8 @@ import alias from 'rollup-plugin-alias';
 
 export default {
     input: './src/main.js',
-    context: 'null',
-    moduleContext: 'null',
+    // context: 'null',
+    // moduleContext: 'null',
     output: [
         {
             inlineDynamicImports : true,

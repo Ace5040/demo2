@@ -81,7 +81,7 @@ class DispDetailForm {
         buttonActivateMap: this.form.getComponentByName("activateRouteMapButton"),
         buttonClear: this.form.getComponentByName("clearRouteButton"),
       },
-      Vue
+      this.$Vue
     );
   }
 
