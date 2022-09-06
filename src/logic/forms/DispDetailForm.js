@@ -11,6 +11,7 @@ class DispDetailForm {
   constructor(form, Vue, popups) {
     this.form = form;
     this.formName = form.name;
+    console.log("🚀 ~ file: DispDetailForm.js ~ line 14 ~ DispDetailForm ~ constructor ~ this.formName", this.formName);
     this.$Vue = Vue;
     this.metaData = form.metaData;
     this.popups = popups;
@@ -20,19 +21,23 @@ class DispDetailForm {
     this.redux = this.$Vue.$redux.storeRedux;
     this.footer = this.form.getComponentByName("EPCSFooter").component;
     this.activeShipId = null;
+    this.mapsForm = ["SwimDispAqua", "CreateDispAqua","EnterDispAquaInn"];
+    this.oldShipCoords = [];
 
-    this.map = new Map(form, Vue);
+    if (this.mapsForm.includes(this.formName)) {
+      this.map = new Map(form, Vue);
+    }
 
-    Vue.$bus.$on("saveDisp", () => this.saveDisp());
-    //Проверяем выводить popup или нет
-    Vue.$bus.$on("checkSave", () => this.checkSave());
     Vue.$bus.$on(["getAsyncShip", "getAsyncImo", "getAsyncCargoTypes", "getAsyncPortplace"], (data) =>
       this._getSelectData(data)
     );
+    Vue.$bus.$on("checkSave", () => this.checkSave());
+    Vue.$bus.$on("saveDisp", () => this.saveDisp());
     Vue.$bus.$on("fillShip", (data) => this._getShip(data));
-    Vue.$bus.$on(["shipCoords", "placeNsr", "exit", "enter", "departure", "destination"], (e) =>
-      this.map.fillCoords(e)
-    );
+    Vue.$bus.$on("checkChangeShipCoords", (e) => this._checkChangeShipCoords(e));
+    Vue.$bus.$on("canselChangeCoords", (e) => this.canselShipCoords(e));
+    Vue.$bus.$on("toggleTabs", (e) => this.toggleTabs(e));
+    Vue.$bus.$on(["shipCoords", "placeNsr", "exit", "enter", "departure", "destination"], (e) => this.fillCoords(e));
 
     if (this.metaData.disabled) this._setDisabled();
     if (this.form.getComponentByName("route")) this._createRoute();
@@ -54,12 +59,10 @@ class DispDetailForm {
   _getShip(data) {
     //добавляем имо или название корабля
     let isShip = data.asyncSetting.displayExpr !== "imo",
-      ships = this.$Vue.store.getters[this.getStoreName("allShips")],
-      cardShip = ships.filter((el) => el.id === data.value)[0],
+      cardShip = this.$Vue.store.getters[this.getStoreName("allShips")][data.value],
       shipInput = this.form.getComponentByName("name").component,
       imoInput = this.form.getComponentByName("imo").component;
-
-    isShip ? imoInput.setValue(cardShip.imo) : shipInput.setValue(cardShip.name);
+    isShip ? imoInput.setValue(cardShip.imo) : shipInput.setValue(cardShip.sid);
   }
 
   _getDisp() {
@@ -86,7 +89,7 @@ class DispDetailForm {
   }
 
   _createEditGrids() {
-    if (this.formName === "ExitSeePort") {
+    if (this.formName === "ExitSeePort" || this.formName === "CreateDispAqua") {
       this.editGridCargo = this.form.getComponentByName("cargoTypes").component;
       this.editGridLogic = new EditGrid(this.editGridCargo, this.form, this.$Vue);
       this.editGridHazard = this.form.getComponentByName("hazardClasses").component;
@@ -109,13 +112,45 @@ class DispDetailForm {
           let route = this.form.getComponentByName(`EPCS${name}`).component;
           let parent = this.form.getComponentByParentId(elem.parentId);
           setCustomCoorinates(elem, route);
-          this.map.changeCoords(parent.components);
+          if (this.mapsForm.includes(this.formName)) {
+            this.map.changeCoords(parent.components);
+          }
         }
         // if (lowerName.includes("date")) {
         //   let date = moment(disp[name]).format("DD.MM.YYYY hh:mm:ss");
         //   element.setValue(date);
         // }
       });
+    }
+  }
+
+  fillCoords(e) {
+    let name = e.event,
+      nameCoords = `EPCS${name}`,
+      id = e.value,
+      elemCoords = {},
+      coords = [];
+
+    if (name === "shipCoords") {
+      elemCoords = this.$Vue.store.getters[this.getStoreName("allShips")][id];
+      console.log("🚀 ~ file: DispDetailForm.js ~ line 136 ~ DispDetailForm ~ fillCoords ~ elemCoords", elemCoords)
+      coords = elemCoords.gposition.coordinates.map((el) => el.toFixed(2));
+      console.log("🚀 ~ file: DispDetailForm.js ~ line 138 ~ DispDetailForm ~ fillCoords ~ coords", coords)
+      if(e.asyncSetting) this._getShip(e);
+    } else {
+      elemCoords = this.$Vue.store.getters[this.getStoreName("allPorts")][id];
+      coords = elemCoords.sgeomlocation.coordinates.map((el) => el.toFixed(2));
+    }
+
+    if (elemCoords) {
+      let coordsInputs = this.form.getComponentByName(nameCoords).components,
+        lat = coordsInputs[0].component,
+        routeLat = coordsInputs[1].component,
+        lon = coordsInputs[2].component,
+        routeLon = coordsInputs[3].component;
+
+      setCustomCoorinates(lat, routeLat, coords);
+      setCustomCoorinates(lon, routeLon, coords);
     }
   }
 
@@ -144,11 +179,6 @@ class DispDetailForm {
         value;
 
       if (name.substr(0, 4) === "EPCS" && name !== "EPCSDataGrid") return;
-      console.log(
-        "🚀 ~ file: DispDetailForm.js ~ line 129 ~ DispDetailForm ~ this.form.components.forEach ~ name",
-        name
-      );
-
       try {
         value = this.form.getComponentByName(name).component.getValue();
       } catch (e) {
@@ -158,11 +188,7 @@ class DispDetailForm {
       if (name in formData) formData[name] = value;
       if (name === "name") formData.shipId = typeof value === "string" ? this.activeShipId : value;
       if (name === "icing") formData.icing = value = value !== "НЕТ";
-      if (name === "ctFk")
-        console.log(
-          "🚀 ~ file: DispDetailForm.js ~ line 181 ~ DispDetailForm ~ this.form.components.forEach ~ value",
-          value
-        );
+      // if (name === "ctFk")
       if (lowerName.includes("date")) formData[name] = moment(value).toJSON();
       if (lowerName.includes("lat") || lowerName.includes("lon")) formData[name] = this.getCoord(component);
 
@@ -184,35 +210,49 @@ class DispDetailForm {
         id,
         formData,
       };
-      console.log("🚀 ~ file: DispDetailForm.js ~ line 165 ~ DispDetailForm ~ saveDisp ~ formData", formData);
       this.$Vue.store.dispatch(this.getStoreName("saveDisp"), payload).then(() => {
         this.$Vue.$bus.$emit("goToMainPage");
       });
     }
   }
 
+  canselShipCoords() {
+    let event = { event: "shipCoords", value: this.form.getComponentByName("name").component.getValue() };
+    console.log("🚀 ~ file: DispDetailForm.js ~ line 220 ~ DispDetailForm ~ canselShipCoords ~ event", event)
+
+    this.fillCoords(event);
+    // console.log("🚀 ~ file: DispDetailForm.js ~ line 218 ~ DispDetailForm ~ canselShipCoords ~ e", this.oldShipCoords)
+    // let coords = this.form.getComponentByName("EPCSshipCoords").components;
+    // let   ship = this.form.getComponentByName("name").component.getValue()
+  }
+
+  toggleTabs(e) {
+    console.log("🚀 ~ file: DispDetailForm.js ~ line 218 ~ DispDetailForm ~ toggleTabs ~ e", e);
+    this.map.changeCoords();
+  }
+
   getCoord(component) {
+    console.log("🚀 ~ file: DispDetailForm.js ~ line 217 ~ DispDetailForm ~ getCoord ~ component", component);
     let parentComponents = this.form.getComponentByParentId(component.parentId).components,
       coords = getCustomCoorinates(parentComponents);
     if (component.componentName.toLowerCase().includes("lat")) return coords[0];
     if (component.componentName.toLowerCase().includes("lon")) return coords[1];
   }
 
-  setImoOrShip(data) {
-    if (data.value.id) {
-      if (data.searchMode === "name") {
-        this.form.getComponentByName("imo").component.setSearchValue(data.value.imo);
-        // this.form.getComponentByName("nameShip").component.setSearchValue(data.value.name);
+  _checkChangeShipCoords(components) {
+    let parentComponents = this.form.getComponentByParentId(components[0].parentId).components,
+      coords = getCustomCoorinates(parentComponents),
+      oldCoords = this.oldShipCoords;
+    if (oldCoords.length && coords) {
+      if (oldCoords[0] !== coords[0] || oldCoords[1] !== coords[1]) {
+        this.$Vue.$bus.$emit("shipCoordsChange");
       }
-      if (data.searchMode === "imo") {
-        this.form.getComponentByName("nameShip").component.setSearchValue(data.value.name);
-        // this.form.getComponentByName("Imo").component.setSearchValue(data.value.imo);
-      }
+    } else {
+      this.oldShipCoords = coords;
     }
   }
 
   checkSave() {
-    console.log(this.metaData);
     //Если форма заблокирована, нам не надо вызывать модальное окно т.к. изменений нет
     let isDisabled = this.metaData.disabled;
     this.$Vue.$bus.$emit(isDisabled ? "goToMainPage" : "changeDataPopup");

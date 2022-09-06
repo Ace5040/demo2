@@ -77,9 +77,6 @@ export default {
         labelRequired: false,
         items: [],
         event: "fillShip",
-        // pattern:"^(.{7})$",
-        invalidMessage: "IMO должно состоять из 7 символов",
-
         asyncSetting: {
           displayExpr: "imo",
           valueExpr: "id",

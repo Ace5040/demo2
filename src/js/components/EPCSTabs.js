@@ -11,7 +11,8 @@ class EPCSTabs extends Component {
         this.validateProps = [
             "label",
             "value",
-            "dataTabs"
+            "dataTabs",
+            "event"
         ];
         this._setPropsBeforeCreate(dataComponent);
     }

@@ -8,24 +8,28 @@ import { Cluster, OSM, Vector as VectorSource } from "ol/source";
 import { fromLonLat } from "ol/proj";
 import { transform } from "ol/proj";
 import { getCustomCoorinates, setCustomCoorinates } from "../../js/tools/map";
+import { isArray } from "lodash";
 class Map {
   constructor(form, Vue) {
-    console.log("🚀 ~ file: Map.js ~ line 13 ~ Map ~ constructor ~ form", form);
     this.form = form;
-    this.nameMap = "EPCS" + form.metaData.nameForm + "Map";
-
-    this.formMap = this.form.getComponentByName(this.nameMap).component;
+    this.formMap = this.form.getComponentByName("routeMap").component;
+    console.log("🚀 ~ file: Map.js ~ line 16666 ~ Map ~ constructor ~ this.formMap", this.formMap);
     this.$Vue = Vue;
     this.allMarkers = {};
     this.store = this.$Vue.store;
-    this.map = null;
+    // this.map = null;
     this.getInstanceMap = this.formMap.getInstance();
+    console.log("🚀 ~ file: Map.js ~ line 22 ~ Map ~ constructor ~ this.getInstanceMap", this.getInstanceMap);
     this.getInstanceMap.then((mapInstance) => {
-      mapInstance.updateSize();
-      this._eventsOnMap(mapInstance);
+      console.log("🚀 ~ file: Map.js ~ line 244444 ~ Map ~ this.getInstanceMap.then ~ mapInstance", mapInstance);
+      if (mapInstance) {
+        mapInstance.updateSize();
+        this._eventsOnMap(mapInstance);
+      }
     });
     Vue.$bus.$on("changeCoords", (e) => {
       let components = e;
+      console.log("🚀 ~ file: Map.js ~ line 32 ~ Map ~ Vue.$bus.$on ~ e", e);
       this.getInstanceMap.then((e) => this.changeCoords(components));
     });
   }
@@ -49,22 +53,27 @@ class Map {
   }
 
   changeCoords(components) {
+    console.log("🚀 ~ file: Map.js ~ line 56 ~ Map ~ changeCoords ~ components", components)
+    console.log("🚀 ~ file: Map.js ~ line 56 ~ Map ~ changeCoords ~ components", this.formMap.getMap())
     this.getInstanceMap.then((mapInstance) => {
-      let coords = getCustomCoorinates(components);
-      coords = transform(coords, "EPSG:4326", "EPSG:3857");
-      const nameMarker = components[0].component.name,
-        marker = this.allMarkers[nameMarker];
+        console.log("🚀 ~ file: Map.js ~ line 57 ~ Map ~ this.getInstanceMap.then ~ mapInstance", mapInstance);
+        if (!Array.isArray(components)) components = this.form.getComponentByName("EPCSshipCoords").components;
+        console.log("🚀 ~ file: Map.js ~ line 61 ~ Map ~ this.getInstanceMap.then ~ components", components)
+        let coords = getCustomCoorinates(components);
+        coords = transform(coords, "EPSG:4326", "EPSG:3857");
+        const nameMarker = components[0].component.name,
+          marker = this.allMarkers[nameMarker];
 
-      let filledCoords = coords.filter((el) => el);
-      if (filledCoords.length === 2) {
-        if (!this.allMarkers[nameMarker]) {
-          this.allMarkers[nameMarker] = new Marker(coords);
-          this.map.addLayer(this.allMarkers[nameMarker].getLayer());
-          this.allMarkers[nameMarker].updateState(coords);
-        } else {
-          marker.updateState(coords);
-        }
-        this.viewMap(nameMarker);
+        let filledCoords = coords.filter((el) => el);
+        if (filledCoords.length === 2) {
+          if (!this.allMarkers[nameMarker]) {
+            this.allMarkers[nameMarker] = new Marker(coords);
+            this.formMap.getMap().addLayer(this.allMarkers[nameMarker].getLayer());
+            this.allMarkers[nameMarker].updateState(coords);
+          } else {
+            marker.updateState(coords);
+          }
+          this.viewMap(nameMarker);
       }
     });
   }
@@ -72,8 +81,9 @@ class Map {
   fillCoords(e) {
     let name = e.event,
       nameCoords = `EPCS${name}`,
-      id = e.value,
-      elemCoords = this.$Vue.store.getters[this.getStoreName("allPorts")][id];
+      id = e.value;
+
+    let elemCoords = this.$Vue.store.getters[this.getStoreName("allPorts")][id];
 
     if (elemCoords) {
       let coords = elemCoords.sgeomlocation.coordinates.map((el) => el.toFixed(2));

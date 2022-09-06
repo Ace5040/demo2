@@ -4,9 +4,7 @@
       :formVue="formsForTpl"
       :form="formByName"
       :formPopups="formPopups"
-      :key="updateKey"
     ></FormTemplate>
-    <!-- <button @click='test'>test</button> -->
   </div>
 </template>
 
@@ -15,17 +13,10 @@ import Application from "./js/application/Application";
 import allStructures from "./js/structureTemplates/allStructures";
 import allPopupStructures from "./js/structureTemplates/popup/allPopupStructures";
 import FormTemplate from "./components/FormTemplate";
-import axios from "axios";
+
 export default {
   name: "App",
-  props: {
-    store: {
-      required: true,
-    },
-    eventBus: {
-      required: true,
-    },
-  },
+  props: {},
   components: {
     FormTemplate,
   },
@@ -38,7 +29,6 @@ export default {
       formsForTpl: null,
       forTpl: null,
       formByName: null,
-      updateKey: 0,
       allPopupStructures,
     };
   },
@@ -49,24 +39,30 @@ export default {
       allPopupStructures: this.allPopupStructures,
     };
     this.application = new Application(structures);
-    // this.getComponent({ nameForm : "EnterSeePort" });
-
-    // this.getComponent({nameForm :"EnterDispAqua"});
-    // this.getComponent({nameForm :"ExitDispAqua"});
-    // this.getComponent({nameForm :"CreateDispAqua"});
-    // this.getComponent({nameForm :"ExitSeePort"});
-    // this.getComponent({nameForm :"EnterSeePort"});
+    // this.getComponent({ nameForm : "EnterSeePort"});
+    // this.getComponent({ nameForm :"EnterDispAqua" });
+    // this.getComponent({ nameForm :"ExitDispAqua" });
+    // this.getComponent({ nameForm :"CreateDispAqua"});
+    // this.getComponent({ nameForm: "ExitSeePort" });
+    // this.getComponent({ nameForm :"EnterSeePort"});
+    // this.getComponent({ nameForm : "EnterDispAquaInn" });
     // this.getComponent({ nameForm : "SwimDispAqua" });
-     this.getComponent({ nameForm: "MainForm" });
+    this.getComponent({ nameForm: "MainForm" });
     // this.getComponent({ nameForm: "ShipsForm" });
     // this.getComponent({ nameForm: "PhotoDisp" });
     // this.getComponent({ nameForm: "ShipsDetailForm" });
-    
+
     //Шина событий для DISPS
-    this.$bus.$on("goToMainPage", () => this.getComponent({ nameForm: "MainForm" }));
+    this.$bus.$on("goToMainPage", () =>
+      this.getComponent({ nameForm: "MainForm" })
+    );
     //Шина событий для SHIPS
-    this.$bus.$on("addNewShip", () => this.getComponent({ nameForm: "ShipsDetailForm" }));
-    this.$bus.$on("goToMainShipPage", () =>this.getComponent({ nameForm: "ShipsForm" }));
+    this.$bus.$on("addNewShip", () =>
+      this.getComponent({ nameForm: "ShipsDetailForm" })
+    );
+    this.$bus.$on("goToMainShipPage", () =>
+      this.getComponent({ nameForm: "ShipsForm" })
+    );
     // бас который открывает форму.
     this.$bus.$on("getComponent", (e) => this.getComponent(e));
   },

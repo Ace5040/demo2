@@ -15,11 +15,6 @@
   align-self: flex-start;
 }
 
-.CUSTOM-DIR-EPCSDirectionSubMain {
-  overflow-y: auto;
-  max-height: 80vh;
-}
-
 .direction-row  {
   align-items: flex-end;
 }
@@ -27,6 +22,13 @@
 .form-input {
   .dx-selectbox-container {
     max-height: 30px;
+  }
+}
+
+.epcs-form-input-group_left {
+  justify-content: space-between;
+  .form-input {
+    max-width: 50%;
   }
 }
 

@@ -126,5 +126,6 @@ export default {
   },
   ports:[],
   allPorts:[],
-  nameMarker : ""
+  nameMarker : "",
+  ships:[]
 };

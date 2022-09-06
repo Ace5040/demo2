@@ -11,21 +11,11 @@ export default {
       props: { title: "Выход из акватории СМП", headerButtons: {} },
     },
     {
-      id: 199,
-      priority: 1,
-      component: "EPCSDirection",
-      componentName: "EPCSDirectionMain",
-      props: {
-        type: "row",
-      },
-    },
-    {
       id: 198,
-      parentId:199,
       priority: 1,
       component: "EPCSDirection",
       componentName: "EPCSDirectionSubMain",
-      col:6,
+
       props: {
         type: "row",
       },
@@ -37,12 +27,13 @@ export default {
       component: "EPCSFormInput",
       visible: true,
       componentName: "name",
+      col:8,
       props: {
         type: "selectAsync",
         placeholder: "Выберете судно",
         items: [],
         label: "1\/\/ Название судна",
-        labelPosition: "top",
+        labelPosition: "left",
         value: "",
         event: "fillShip",
         labelRequired: true,
@@ -66,11 +57,12 @@ export default {
       component: "EPCSFormInput",
       visible: true,
       componentName: "imo",
+      col:8,
       props: {
         type: "selectAsync",
         placeholder: "Номер IMO",
         label: "2\/\/ Номер  IMO (при наличии)",
-        labelPosition: "top",
+        labelPosition: "left",
         value: "",
         labelRequired: false,
         items: [],
@@ -95,6 +87,7 @@ export default {
       priority: 1,
       component: "EPCSDirection",
       componentName: "EPCSDirection",
+      col:8,
       props: {
         type: "row",
         label: "3\/\/ Дата, время (московское) и место пересечения границы акватории СМП",
@@ -148,7 +141,6 @@ export default {
       componentName: "EPCSexit",
       props: {
         type: "row",
-        event: "changeCoords",
         label:'4\/\/ Географические координаты пересечения границы СМП'
       },
     },
@@ -223,6 +215,7 @@ export default {
       component: "EPCSFormInput",
       visible: true,
       componentName: "course",
+      col:8,
       props: {
         type: "number",
         label: "5\/\/ Курс судна с точностью до 1 градуса",
@@ -239,7 +232,7 @@ export default {
       component: "EPCSFormInput",
       visible: true,
       componentName: "speed",
-      value: "123",
+      col:8,
       props: {
         type: "number",
         label: "6\/\/ Скорость судна с точностью до 0.1 узла",
@@ -248,17 +241,6 @@ export default {
         step:1,
         value: null
       },
-    },
-    {
-      id: 101,
-      parentId: 199,
-      priority: 1,
-      component: "EPCSMap",
-      visible: true,
-      col:6,
-      componentName: "EPCSExitDispAquaMap",
-      name: "ExitDispAquaMap",
-      props: { mapId: 'ExitDispAquaMap' }
     },
     {
       id: 200,

@@ -89,7 +89,7 @@
   align-self: flex-start !important;
 }
 
-.CUSTOM-DIR-EPCSExitSeePortMap {
+.CUSTOM-DIR-EPCSExitSeePortMap, .CUSTOM-DIR-EPCSCreateDispAquaMap {
   align-self: flex-start;
 }
 
@@ -111,17 +111,19 @@
   align-self: flex-start;
 }
 
-.CUSTOM-DIR-EPCSDirectionSubMain {
-  overflow-y: auto;
-  max-height: 80vh;
-}
-
 .direction-row {
   align-items: flex-end;
 }
 
 .form-input .dx-selectbox-container {
   max-height: 30px;
+}
+
+.epcs-form-input-group_left {
+  justify-content: space-between;
+}
+.epcs-form-input-group_left .form-input {
+  max-width: 50%;
 }
 
 ::-webkit-scrollbar {
@@ -28229,12 +28231,6 @@ input.dx-hidden {
   padding-left: 16px;
 }
 
-.epcs-map {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
 .epcs-map-popup {
   cursor: auto;
 }
@@ -28311,6 +28307,12 @@ input.dx-hidden {
   padding: 8px;
   max-height: 200px;
   overflow: auto;
+}
+
+.epcs-map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .epcs-map-popup--factory {

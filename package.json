@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "buildR": "rollup -c",
+    "b": "rollup -c",
+    "w": "rollup -c -w",
     "serve:standalone": "vue-cli-service serve --mode standalone"
   },
   "dependencies": {

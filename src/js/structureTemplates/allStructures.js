@@ -4,6 +4,7 @@ import ExitDispAqua from "./forms/disps/exitDispAqua";
 import EnterSeePort from "./forms/disps/enterSeePort";
 import ExitSeePort from "./forms/disps/exitSeePort";
 import CreateDispAqua from "./forms/disps/createDispAqua";
+import EnterDispAquaInn from "./forms/disps/enterDispAquaInn";
 import SwimDispAqua from "./forms/disps/swimDispAqua";
 import ShipsForm from "./forms/ships/shipsForm";
 import ShipsDetailForm from "./forms/ships/shipsDetailForm";
@@ -19,7 +20,8 @@ const allStructures = {
   SwimDispAqua,
   ShipsForm,
   ShipsDetailForm,
-  PhotoDisp
+  PhotoDisp,
+  EnterDispAquaInn
 };
 
 export default allStructures;

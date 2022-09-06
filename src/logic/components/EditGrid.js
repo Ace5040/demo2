@@ -2,7 +2,6 @@ import api from "../../api";
 
 class EditGrid {
   constructor(editGrid, form, Vue) {
-    console.log("🚀 ~ file: EditGrid.js ~ line 5555555555 ~ EditGrid ~ constructor ~ editGrid", editGrid);
     this.editGrid = editGrid;
     this.editGridName = editGrid.name;
     this.form = form;
@@ -10,7 +9,7 @@ class EditGrid {
     this.tableData = editGrid.props.tableData;
 
     this.getValues();
-    Vue.$bus.$on("addRowEditGrid", (e) => this.addRow(e));
+    Vue.$bus.$on(this.editGrid.props.addEvent, (e) => this.addRow(e));
     Vue.$bus.$on("deleteRowEditGrid", (e) => this.deleteRow(e));
     Vue.$bus.$on("updateTableData", (e) => this.updateTableData(e));
   }
@@ -38,7 +37,12 @@ class EditGrid {
   }
 
   addRow(e) {
-    let newRow = { shipName: "" };
+    let newRow = {}
+    let columns = this.editGrid.props.columnComponents
+    Object.keys(columns).forEach(el => {
+      newRow[el] = columns[el].props.value
+    })
+
     this.editGrid.addRow(newRow);
     if (this.editGrid.props.num) {
       this.updateNum();

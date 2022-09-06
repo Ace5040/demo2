@@ -29,7 +29,7 @@ class EPCSEditDataGrid extends Component {
       "templateRow",
       "values",
       "columnComponents",
-      "label"
+      "label","addEvent"
     ];
     this._setPropsBeforeCreate(dataComponent);
   }

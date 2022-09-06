@@ -24,7 +24,7 @@ export default {
   },
   asyncShip({commit,state}) {
     return api.getShips().then((res) => {
-      if (res.status === 200) commit("saveShips", res.data);
+      if (res) commit("saveShips", res);
     });
   },
   asyncCargoTypes({commit,state}) {
@@ -47,8 +47,5 @@ export default {
         // if (res.status === 204) commit("deleteDisp", id);
         });
     }
-    // return api.saveNewDisp(data).then((res) => {
-    //   // if (res.status === 204) commit("deleteDisp", id);
-    // });
   }
 };

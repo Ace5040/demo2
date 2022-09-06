@@ -22,14 +22,13 @@ class DispForm {
     this.activeRowData = null;
     this.storeName = "dispStore";
     this.filter = new Filter(this.popups.filterPopup, Vue, this.dataGrid, this.header);
-    // this.settingsFilter = JSON.parse(sessionStorage.getItem("DispForm")) || {};
     this.joystick = new Joystick(form, Vue);
-   
+
     //получаем данные с сервера
     this.getDispList();
     // запрашиваем данные по id
-    Vue.$bus.$on("copyDisp", (e) => this.getDisp("copy",e));
-    Vue.$bus.$on("editDisp", (e) => this.getDisp("edit",e));
+    Vue.$bus.$on("copyDisp", (e) => this.getDisp("copy", e));
+    Vue.$bus.$on("editDisp", (e) => this.getDisp("edit", e));
     Vue.$bus.$on("openDisp", (e) => this.getDisp());
     Vue.$bus.$on("activeRow", (e) => this.setActiveRow(e));
     Vue.$bus.$on("deleteDisp", (e) => this.deleteDisp(e));
@@ -37,7 +36,7 @@ class DispForm {
     Vue.$bus.$on("addActualDisp", (e) => this.addActualDisp(e));
     Vue.$bus.$on("addNewDisp", () => this.openDisp());
     Vue.$bus.$on("clearFilter", () => this.filter.clearFilter());
-    Vue.$bus.$on("clearActiveRows", () => this.clearActiveRows())
+    Vue.$bus.$on("clearActiveRows", () => this.clearActiveRows());
     Vue.$bus.$on("openSection", (e) => this.openSection(e));
     Vue.$bus.$on("openNotification", (e) => this.openNotification(e));
   }
@@ -50,24 +49,24 @@ class DispForm {
 
   openSection(e) {
     if (e.formName !== this.form.getFormName()) {
-      let sectionName = e.formName
-      this.$Vue.$bus.$emit("getComponent", {nameForm: sectionName, meta: e});
+      let sectionName = e.formName;
+      this.$Vue.$bus.$emit("getComponent", { nameForm: sectionName, meta: e });
     }
   }
 
-  openNotification(e) {    
-      this.$Vue.$bus.$emit(e.data.disabled ?  "getComponent" : "newDispPopup",e.data);
+  openNotification(e) {
+    this.$Vue.$bus.$emit(e.data.disabled ? "getComponent" : "newDispPopup", e.data);
   }
 
   //Создаем структуру таблицы исходя из колонок
   // В данном случае идет преобразование даты и смена имени для nameDisp
   createTableData(data) {
     const tableData = [];
-    data.forEach((disp,idx) => {
+    data.forEach((disp, idx) => {
       let dataGridRow = {};
       this.dataGrid.getColumnNames().forEach((col) => {
         dataGridRow.id = disp.id;
-        if (col === "N")  return dataGridRow[col] = idx+1
+        if (col === "N") return (dataGridRow[col] = idx + 1);
         if (col === "nameDisp") return (dataGridRow[col] = structureForm[disp[col]]);
         if (col === "createDate") return (dataGridRow[col] = moment(disp[col]).format("DD.MM.YYYY hh:mm:ss"));
         dataGridRow[col] = disp[col];
@@ -76,8 +75,7 @@ class DispForm {
     });
     // меняем данные для DataGrid
     this.dataGrid.setTableData(tableData);
-    let filter = this.$Vue.store.getters[this.getStoreName("settingsFilter")];
-    if (Object.keys(filter).length) this.filteringData(filter);
+    if (this.settingsFilter) this.filteringData(filter);
   }
 
   setFilter() {
@@ -103,7 +101,7 @@ class DispForm {
 
   clearActiveRows() {
     this.header.deactivateRow("mainForm");
-    this.$Vue.$bus.$emit('deselectAll')
+    this.$Vue.$bus.$emit("deselectAll");
   }
 
   deleteDisp(e) {
@@ -129,9 +127,7 @@ class DispForm {
       this.generateUniqNames();
 
       this.$Vue.store.commit(this.getStoreName("createStructureForm"), this.dataGrid.props.tableData);
-      if (Object.keys(this.settingsFilter).length) {
-        this.setFilter();
-      }
+      if (this.settingsFilter) this.setFilter();
     });
   }
   //Делаем имена кораблей для инпута в фильтре
@@ -145,7 +141,7 @@ class DispForm {
     filterShip.props.items = uniqShips;
   }
 
-  getDisp(nameEvent,e) {
+  getDisp(nameEvent, e) {
     // Если есть event значит это или копирование или редактирование и disabled = false
     // Если просто клик в DataGrid то Eventa нет и инпуты заблокированы
     let payload = {

@@ -4,6 +4,7 @@ import Vue from "vue";
 const redux = Vue.prototype.$redux;
 
 export default {
+  configDisps: Vue.prototype.configDisps,
   publicationURL: "http://10.20.30.102:3000",
   namesController: {
     ExitDispAqua: "dispsExitNSR",
@@ -14,18 +15,16 @@ export default {
     ExitSeePort: "dispsExitPort",
   },
   getDispList() {
-    return axios.get(`${this.publicationURL}/dispsNSR?filter[order]=createDate%20DESC&filter[limit]=30`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/dispsNSR?filter[order]=createDate%20DESC&filter[limit]=30`, {}).then(function (response) {
       return response;
     });
   },
-
   getCountries() {
     let redux = Vue.prototype.$redux;
     return new Promise((resolve, reject) => {
       redux.storeRedux.dispatch(redux.functions.epcsGeneralOperations.asyncGetCountries()).then((res) => resolve(res.payload));
     });
   },
-
   getShipList() {
     let redux = Vue.prototype.$redux;
     return new Promise((resolve, reject) => {
@@ -35,43 +34,27 @@ export default {
     });
   },
   getPorts() {
-    return axios.get(`${this.publicationURL}/portplaces`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/portplaces`, {}).then(function (response) {
       return response;
     });
   },
-  getShips() {
-    let redux = Vue.prototype.$redux;
-    return new Promise((resolve, reject) => {
-      redux.storeRedux.dispatch(redux.functions.epcsGeneralOperations.asyncGetShips())
-      redux.storeRedux.subscribe(() => {
-        let ships = redux.storeRedux.getState().nlcEpcsPortal.ships
-        if(ships) resolve(ships);
-      });
-    });
-  },
-
   getDisp(data) {
     let url = this.namesController[data.nameForm],
       id = data.id;
-    return axios.get(`${this.publicationURL}/${url}/${id}?filter={"include":["ship"]}`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/${url}/${id}?filter={"include":["ship"]}`, {}).then(function (response) {
       return response;
     });
   },
   getShips() {
-    let redux = Vue.prototype.$redux;
-    return new Promise((resolve, reject) => {
-      redux.storeRedux.dispatch(redux.functions.epcsGeneralOperations.asyncGetShips())
-      redux.storeRedux.subscribe(() => {
-        let ships = redux.storeRedux.getState().nlcEpcsPortal.ships
-        if(ships) resolve(ships);
-      });
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/ship-pos-owner?filter[limit]=30`, {}).then(function (response) {
+      return response.data;
     });
   },
   saveNewDisp(data) {
     let url = this.namesController[data.nameForm],
       formData = data.formData;
     if (formData.id) delete formData.id;
-    return axios.post(`${this.publicationURL}/${url}`, formData).then(function (response) {
+    return axios.post(`${Vue.prototype.configDisps.urlMNS}/${url}`, formData).then(function (response) {
       return response;
     });
   },
@@ -79,14 +62,14 @@ export default {
     let url = this.namesController[data.nameForm],
       id = data.formData.id,
       formData = data.formData;
-    return axios.patch(`${this.publicationURL}/${url}/${id}`, formData).then(function (response) {
+    return axios.patch(`${Vue.prototype.configDisps.urlMNS}/${url}/${id}`, formData).then(function (response) {
       return response;
     });
   },
   deleteDisp(data) {
     let url = this.namesController[data.nameForm],
       id = data.id;
-    return axios.delete(`${this.publicationURL}/${url}/${id}`, {}).then(function (response) {
+    return axios.delete(`${Vue.prototype.configDisps.urlMNS}/${url}/${id}`, {}).then(function (response) {
       return response;
     });
   },
@@ -116,22 +99,22 @@ export default {
     });
   },
   getCargoTypes() {
-    return axios.get(`${this.publicationURL}/cargoTypes`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/cargoTypes`, {}).then(function (response) {
       return response;
     });
   },
   getHazardClasses() {
-    return axios.get(`${this.publicationURL}/hazardClasses`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/hazardClasses`, {}).then(function (response) {
       return response;
     });
   },
   getShipTypes() {
-    return axios.get(`${this.publicationURL}/shipTypes`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/shipTypes`, {}).then(function (response) {
       return response;
     });
   },
   getCoordShip(id) {
-    return axios.get(`${this.publicationURL}/ship-pos/${id}`, {}).then(function (response) {
+    return axios.get(`${Vue.prototype.configDisps.urlMNS}/ship-pos/${id}`, {}).then(function (response) {
       return response;
     });
   }

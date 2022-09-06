@@ -16,6 +16,7 @@ export default {
     CreateDispAqua:{DispDetailForm,Popup,},
     ShipsForm:{ShipsForm,Popup},
     ShipsDetailForm:{ShipsDetailForm,Popup},
-    PhotoDisp : {PhotoDisp,Map}
+    PhotoDisp : {PhotoDisp,Map},
+    EnterDispAquaInn : {DispDetailForm,Map}
 }
 

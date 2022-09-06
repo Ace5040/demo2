@@ -29,7 +29,8 @@ class EPCSDataGrid extends Component {
       "loadState",
       "rowTemplate",
       "edit",
-      "columnComponents"
+      "columnComponents",
+      "pageSizes"
     ];
     this._setPropsBeforeCreate(dataComponent);
   }

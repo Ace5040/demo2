@@ -11,21 +11,10 @@ export default {
       props: { title: "Заход в морской порт", headerButtons: {} },
     },
     {
-      id: 199,
-      priority: 1,
-      component: "EPCSDirection",
-      componentName: "EPCSDirectionMain",
-      props: {
-        type: "row",
-      },
-    },
-    {
       id: 198,
-      parentId:199,
       priority: 1,
       component: "EPCSDirection",
       componentName: "EPCSDirectionSubMain",
-      col:6,
       props: {
         type: "row",
       },
@@ -34,6 +23,7 @@ export default {
       id: 101,
       parentId: 198,
       priority: 1,
+      col: 8,
       component: "EPCSFormInput",
       visible: true,
       componentName: "name",
@@ -41,8 +31,8 @@ export default {
         type: "selectAsync",
         placeholder: "Выберете судно",
         items: [],
-        label: "1\/\/ Название судна",
-        labelPosition: "top",
+        label: "1// Название судна",
+        labelPosition: "left",
         value: "",
         event: "fillShip",
         labelRequired: true,
@@ -65,19 +55,18 @@ export default {
       priority: 1,
       component: "EPCSFormInput",
       visible: true,
+      col: 8,
       componentName: "imo",
       props: {
         type: "selectAsync",
         placeholder: "Номер IMO",
-        label: "2\/\/ Номер  IMO (при наличии)",
-        labelPosition: "top",
+        label: "2// Номер  IMO (при наличии)",
+        labelPosition: "left",
         value: "",
         labelRequired: false,
         items: [],
         event: "fillShip",
-        // pattern:"^(.{7})$",
-        invalidMessage:"IMO должно состоять из 7 символов",
-
+        invalidMessage: "IMO должно состоять из 7 символов",
         asyncSetting: {
           displayExpr: "imo",
           valueExpr: "id",
@@ -97,9 +86,10 @@ export default {
       priority: 1,
       component: "EPCSDirection",
       componentName: "EPCSDdd",
+      col: 8,
       props: {
         type: "row",
-        label: "3\/\/ Дата и время (московское) прибытия в порт, название порта/локации",  
+        label: "3// Дата и время (московское) прибытия в порт, название порта/локации",
       },
     },
     {
@@ -112,8 +102,8 @@ export default {
       col: 6,
       props: {
         type: "date",
-        value:"",
-        placeholder:"дд.мм.гггг 00:00"
+        value: "",
+        placeholder: "дд.мм.гггг 00:00",
       },
     },
     {
@@ -137,7 +127,6 @@ export default {
           customValue: true,
           asyncName: "Portplace",
           templateRow: {
-            // id: null,
             name: "",
           },
         },
@@ -192,7 +181,7 @@ export default {
       priority: 1,
       component: "EPCSFormInput",
       visible: true,
-      componentName: "placeNsrLon", 
+      componentName: "placeNsrLon",
       col: 4,
       props: {
         type: "number",
@@ -219,18 +208,6 @@ export default {
       },
     },
     {
-      id: 101,
-      parentId: 199,
-      priority: 1,
-      component: "EPCSMap",
-      visible: true,
-      col:6,
-      componentName: "EPCSEnterSeePortMap",
-      name: "EnterSeePortMap",
-      props: { mapId: 'EnterSeePortMap' }
-    },
-  
-    {
       id: 200,
       priority: 5,
       component: "EPCSFooter",
@@ -240,9 +217,9 @@ export default {
         leftEvent: "checkSave",
         leftType: "primary",
         leftLabel: "Назад",
-        rightLabel:"Отправить",
-        rightType:'primary',
-        rightEvent:'saveDisp',
+        rightLabel: "Отправить",
+        rightType: "primary",
+        rightEvent: "saveDisp",
       },
     },
     {

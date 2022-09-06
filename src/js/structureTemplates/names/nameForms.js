@@ -5,4 +5,5 @@ export default  {
     EnterSeePort: "Заход в морской порт РФ",
     ExitSeePort: "Выход из морского порта СМП",
     ExitDispAqua: "Выход из акватории СМП",
+    EnterDispAquaInn: "Вход в акваторию СМП из внутренних водных путей РФ",
 }

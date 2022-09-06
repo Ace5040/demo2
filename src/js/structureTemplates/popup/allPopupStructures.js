@@ -8,10 +8,11 @@ import deleteСonfirmPopup from "./ships/deleteСonfirmPopup"
 import changeShipDataPopup from "./ships/changeShipDataPopup"
 import deleteFilePopup from "./ships/deleteFilePopup"
 import deleteRoutePopup from "./disps/deleteRoutePopup"
+import shipCoordsChange from "./disps/shipCoordsChange"
 
 
 const allPopupStructures = {
-    filterPopup,deletePopup,newDispPopup,shipFilterPopup,deleteShipPopup,changeDataPopup,deleteСonfirmPopup,changeShipDataPopup,deleteFilePopup,deleteRoutePopup
+    shipCoordsChange,filterPopup,deletePopup,newDispPopup,shipFilterPopup,deleteShipPopup,changeDataPopup,deleteСonfirmPopup,changeShipDataPopup,deleteFilePopup,deleteRoutePopup
 }
 
 export default allPopupStructures;

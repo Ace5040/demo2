@@ -5,7 +5,7 @@ export default {
   actualDataGrid: (state) => state.actualDataGrid,
   filledForms: (state) => state.filledForms,
   allShips: (state) => state.allShips,
-  asyncShip: (state) => state.allShips,
+  asyncShip: (state) => state.ships,
   backendForms: (state) => state.backendForms,
   nameMarker: (state) => state.nameMarker,
   asyncCargoTypes: (state) => state.asyncCargoTypes,

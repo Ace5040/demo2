@@ -28,6 +28,7 @@ export default {
         eventClick: "activeRow",
         pageSize: 10,
         selectionMode: "single",
+        pageSizes:[10,20],
         inputColumnNames: {
           N:"N",
           nameDisp : "Диспетчерское СМП",
