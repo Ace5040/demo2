@@ -32333,6 +32333,15 @@ input.dx-hidden {
   height: 100%;
 }
 
+.epcs-map-popup--factory {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 0;
+  display: flex;
+  flex-direction: row;
+}
+
 .epcs-map-popup {
   cursor: auto;
 }
@@ -32409,15 +32418,6 @@ input.dx-hidden {
   padding: 8px;
   max-height: 200px;
   overflow: auto;
-}
-
-.epcs-map-popup--factory {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 0;
-  display: flex;
-  flex-direction: row;
 }
 
 /*.epcs-upload-button__main__row {*/
